@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #839fa5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+h1 {
+    color: #333;
+}
+
+img{
+    width: 200px;
+    height: 200px;
+}
+
+/* From Uiverse.io by Cevorob */ 
+button {
+    position: relative;
+    height: 50px;
+    padding: 0 30px;
+    border: 2px solid #000;
+    background: #ffffff;
+    user-select: none;
+    white-space: nowrap;
+    transition: all .05s linear;
+    font-family: inherit;
+   }
+   
+   button:before, button:after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    transition: all .2s linear;
+   }
+   
+   button:before {
+    width: calc(100% + 6px);
+    height: calc(100% - 16px);
+    top: 8px;
+    left: -3px;
+   }
+   
+   button:after {
+    width: calc(100% - 16px);
+    height: calc(100% + 6px);
+    top: -3px;
+    left: 8px;
+   }
+   
+   button:hover {
+    cursor: crosshair;
+   }
+   
+   button:active {
+    transform: scale(0.95);
+   }
+   
+   button:hover:before {
+    height: calc(100% - 32px);
+    top: 16px;
+   }
+   
+   button:hover:after {
+    width: calc(100% - 32px);
+    left: 16px;
+   }
+   
+   button span {
+    font-size: 15px;
+    z-index: 3;
+    position: relative;
+    font-weight: 600;
+   }
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+.dark-mode .container {
+    background: #1e1e1e;
+    color: white;
+}
+
+.dark-mode button {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode button:hover {
+    background-color: #555;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="pwa.png">
+    <title>PWA App</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(reg => console.log('Service Worker registrado', reg))
+                .catch(err => console.log('Error al registrar el Service Worker', err));
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Holaaa soy una pequeña PWA</h1>
+        <p> Esta PWA es un excelente ejemplo de cómo las aplicaciones web pueden ofrecer una experiencia rica y dinámica similar 
+            a las aplicaciones móviles nativas, utilizando tecnologías estándar como HTML, CSS, JavaScript y APIs modernas.</p>
+            <img src="unam.jpg" />
+            <p></p>
+        <button id="install-button" hidden>Instalar PWA</button>
+        <button id="notify-button"><span>Enviar Notificación</span></button>
+        <button id="theme-toggle"><span>Modo Oscuro</span></button>
+        <button id="share-button"><span>Compartir</span></button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const status = document.createElement('p');
+            status.textContent = 'Estado: Online';
+            document.body.appendChild(status);
+
+            window.addEventListener('offline', () => status.textContent = 'Estado: Offline');
+            window.addEventListener('online', () => status.textContent = 'Estado: Online');
+        });
+
+        // Manejo de instalación PWA
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            deferredPrompt = event;
+            installButton.hidden = false;
+
+            installButton.addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(choice => {
+                    if (choice.outcome === 'accepted') {
+                        console.log('Usuario instaló la PWA');
+                    }
+                    installButton.hidden = true;
+                });
+            });
+        });
+
+        // Modo Oscuro
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Compartir contenido
+        const shareButton = document.getElementById('share-button');
+        shareButton.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mi PWA',
+                    text: 'Prueba esta increíble aplicación web progresiva.',
+                    url: window.location.href
+                }).catch(err => console.log('Error al compartir:', err));
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                .then(() => console.log('Service Worker registrado'))
+                .catch(err => console.error('Error en el Service Worker', err));
+            }
+            } else {
+                alert('La funcionalidad de compartir no está disponible en este navegador.');
+            }
+        });
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
+
